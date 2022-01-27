@@ -23,7 +23,7 @@ export default function Header() {
                                     <img
                                         alt="hanguelLogo"
                                         src={hanguelLogo}
-                                        style={{ width:210, height:120, margin:'auto' }}
+                                        style={{ width:210, height:100, margin:'auto' }}
                                         
                                     />
                                 </a>

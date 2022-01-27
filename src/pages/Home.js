@@ -16,7 +16,7 @@ import Footer from '../component/Footer.js';
 export default function Home() {
     const [tableData, setTableData] = useState('');
     useEffect(() => {
-        axios.get(`https://180.228.243.235/schedules`).then((response) => {
+        axios.get(`/schedules`).then((response) => {
         console.log(response.data);    
         setTableData(response.data);
         });
