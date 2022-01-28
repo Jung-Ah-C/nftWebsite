@@ -31,7 +31,7 @@ export default function Header() {
                             </Box>
                         </Grid>
                         <Grid xs={4}>
-                            {/*  */}
+                            {/* 중앙로고 / 데스크탑 버전 */}
                             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
                                 <a href="/">
                                     <img
@@ -42,6 +42,7 @@ export default function Header() {
                                     />
                                 </a>
                             </Box>
+                            {/* 중앙로고 / 모바일 버전 */}
                             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', justifyContent: 'center' } }}>
                                 <a href="/">
                                     <img
@@ -53,6 +54,7 @@ export default function Header() {
                                 </a>
                             </Box>
                         </Grid>
+                        {/* SNS 로고 */}
                         <Grid xs={4}>
                             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex', justifyContent: 'end' } }}>
                                 <IconButton sx={{ p: 0 }}>

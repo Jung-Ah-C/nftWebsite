@@ -14,10 +14,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 
 import Header from '../component/Header.js';
 import Footer from '../component/Footer.js';
-import HeaderTemp from '../component/HeaderTemp.js';
+import ScrollToTop from '../component/ScrollToTop.js';
 
 export default function Home() {
     const [tableData, setTableData] = useState('');
@@ -30,10 +31,11 @@ export default function Home() {
 
     
     return (
-        <>
+        <React.Fragment>
             <div className="AppBar">
                 <Header/>
             </div>
+            <Toolbar id="back-to-top-anchor" />
             <div className="content">
                 <Box 
                     sx={{ 
@@ -72,9 +74,9 @@ export default function Home() {
                                                 <TableCell align="center">{row.price}</TableCell>
                                                 <TableCell align="center">{row.high_price}</TableCell>
                                                 <TableCell align="center">
-                                                    <a href={row.weblink}><BsLink45Deg/></a>
-                                                    <a href={row.twitlink}><BsTwitter/></a>
-                                                    <a href={row.discordlink}><BsDiscord/></a>
+                                                    <a href={row.weblink} style={{ color: 'gray' }}><BsLink45Deg/></a>
+                                                    <a href={row.twitlink} style={{ color: 'gray' }}><BsTwitter/></a>
+                                                    <a href={row.discordlink} style={{ color: 'gray' }}><BsDiscord/></a>
                                                 </TableCell>
                                                 <TableCell align="center">{row.date}</TableCell>
                                                 <TableCell align="center">time</TableCell>
@@ -89,9 +91,10 @@ export default function Home() {
                     </Grid>
                 </Box>
             </div>
+            <ScrollToTop/>
             <div className="Footer">
                 <Footer/>
             </div>
-        </>
+        </React.Fragment>
     )
 }
