@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-import Header from '../component/Header.js';
+import { BsLink45Deg } from "react-icons/bs";
+import { BsDiscord } from "react-icons/bs";
+import { BsTwitter } from "react-icons/bs";
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,7 +14,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+
+import Header from '../component/Header.js';
 import Footer from '../component/Footer.js';
+import HeaderTemp from '../component/HeaderTemp.js';
 
 export default function Home() {
     const [tableData, setTableData] = useState('');
@@ -21,6 +27,7 @@ export default function Home() {
         setTableData(response.data);
         });
     }, []);
+
     
     return (
         <>
@@ -45,31 +52,36 @@ export default function Home() {
                                 <Table stickyHeader sx={{ minWidth: 800 }}>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="center"><b>프로젝트</b></TableCell>
-                                            <TableCell align="center"><b>링크</b></TableCell>
-                                            <TableCell align="center"><b>날짜</b></TableCell>
-                                            <TableCell align="center"><b>시간</b></TableCell>
-                                            <TableCell align="center"><b>수량</b></TableCell>
-                                            <TableCell align="center"><b>민팅가격</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>프로젝트</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>민팅가격</b></TableCell>
                                             {/* tooltip 추가하기 */}
-                                            <TableCell align="center"><b>시장가격</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>시장가격</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>링크</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>날짜</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>시간</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>수량</b></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                    { tableData ? tableData.map((row) => (
-                                        <TableRow key={row.id}>
-                                            <TableCell component="th" scope="row">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.weblink}
-                                            </TableCell>
-                                            <TableCell align="right">{row.date}</TableCell>
-                                            <TableCell align="right">{row.count}</TableCell>
-                                            <TableCell align="right">{row.price}</TableCell>
-                                            <TableCell align="right">{row.high_price}</TableCell>
-                                        </TableRow>
-                                    )) : '' }
+                                    { 
+                                        tableData ? tableData.map((row) => (
+                                            <TableRow key={row.id} scope={row}>
+                                                <TableCell align="center">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell align="center">{row.price}</TableCell>
+                                                <TableCell align="center">{row.high_price}</TableCell>
+                                                <TableCell align="center">
+                                                    <a href={row.weblink}><BsLink45Deg/></a>
+                                                    <a href={row.twitlink}><BsTwitter/></a>
+                                                    <a href={row.discordlink}><BsDiscord/></a>
+                                                </TableCell>
+                                                <TableCell align="center">{row.date}</TableCell>
+                                                <TableCell align="center">time</TableCell>
+                                                <TableCell align="center">{row.count}</TableCell>
+                                            </TableRow>
+                                        )) : '' 
+                                    }
                                     </TableBody>
                                 </Table>
                             </TableContainer>

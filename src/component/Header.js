@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Grid from '@mui/material/Grid';
+import {FaDiscord} from 'react-icons/fa';
 
 import logo from '../img/logo.png';
 import hanguelLogo from '../img/hanguelLogo.png';
@@ -18,24 +19,35 @@ export default function Header() {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Grid xs={4}>
-                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex', justifyContent: 'start' } }}>
+                            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'start' } }}>
                                 <a href="/">
                                     <img
                                         alt="hanguelLogo"
                                         src={hanguelLogo}
-                                        style={{ width:210, height:100, margin:'auto' }}
+                                        style={{ width:250, height:100, margin:'auto' }}
                                         
                                     />
                                 </a>
                             </Box>
                         </Grid>
                         <Grid xs={4}>
-                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex', justifyContent: 'center' } }}>
+                            {/*  */}
+                            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
                                 <a href="/">
                                     <img
                                         alt="logo"
                                         src={logo}
                                         style={{ width:210, height:140, margin:'auto' }}
+                                        
+                                    />
+                                </a>
+                            </Box>
+                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', justifyContent: 'center' } }}>
+                                <a href="/">
+                                    <img
+                                        alt="hanguelLogo"
+                                        src={hanguelLogo}
+                                        style={{ width:250, height:100, margin:'auto' }}
                                         
                                     />
                                 </a>
