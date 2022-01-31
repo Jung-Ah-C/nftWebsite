@@ -15,6 +15,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import Tooltip from "@mui/material/Tooltip";
+import { Link } from 'react-router-dom';
 
 import Header from '../component/Header.js';
 import Footer from '../component/Footer.js';
@@ -28,7 +30,6 @@ export default function Home() {
         setTableData(response.data);
         });
     }, []);
-
     
     return (
         <React.Fragment>
@@ -55,12 +56,13 @@ export default function Home() {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="center" width="10%"><b>프로젝트</b></TableCell>
+                                            <TableCell align="center" width="10%"></TableCell>
                                             <TableCell align="center" width="10%"><b>민팅가격</b></TableCell>
-                                            {/* tooltip 추가하기 */}
-                                            <TableCell align="center" width="10%"><b>시장가격</b></TableCell>
+                                            <Tooltip title="시장 상황에 따라 가격이 변동될 수 있습니다.">
+                                                <TableCell align="center" width="10%"><b>시장가격</b></TableCell>
+                                            </Tooltip>
                                             <TableCell align="center" width="10%"><b>링크</b></TableCell>
                                             <TableCell align="center" width="10%"><b>날짜</b></TableCell>
-                                            <TableCell align="center" width="10%"><b>시간</b></TableCell>
                                             <TableCell align="center" width="10%"><b>수량</b></TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -69,17 +71,19 @@ export default function Home() {
                                         tableData ? tableData.map((row) => (
                                             <TableRow key={row.id} scope={row}>
                                                 <TableCell align="center">
-                                                    {row.name}
+                                                    <Link to={`/${row.id}`}><img src={row.image} width="150" height="150"/></Link>
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <Link to={`/${row.id}`}>{row.name}</Link>
                                                 </TableCell>
                                                 <TableCell align="center">{row.price}</TableCell>
                                                 <TableCell align="center">{row.high_price}</TableCell>
                                                 <TableCell align="center">
-                                                    <a href={row.weblink} style={{ color: 'gray' }}><BsLink45Deg/></a>
-                                                    <a href={row.twitlink} style={{ color: 'gray' }}><BsTwitter/></a>
-                                                    <a href={row.discordlink} style={{ color: 'gray' }}><BsDiscord/></a>
+                                                    <a href={row.weblink} style={{ color: 'gray' }} alt="webLink"><BsLink45Deg style={{ width: '20', height: '20' }}/></a>
+                                                    <a href={row.twitlink} style={{ color: 'gray' }} alt="twitterLink"><BsTwitter style={{ width: '20', height: '20' }}/></a>
+                                                    <a href={row.discordlink} style={{ color: 'gray' }} alt="discordLink"><BsDiscord style={{ width: '20', height: '20' }}/></a>
                                                 </TableCell>
                                                 <TableCell align="center">{row.date}</TableCell>
-                                                <TableCell align="center">time</TableCell>
                                                 <TableCell align="center">{row.count}</TableCell>
                                             </TableRow>
                                         )) : '' 
