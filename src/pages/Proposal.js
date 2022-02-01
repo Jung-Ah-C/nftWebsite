@@ -1,26 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React from 'react';
+
+// material UI
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 
+// component
 import Header from '../component/Header.js';
 import Footer from '../component/Footer.js';
 import ScrollToTop from '../component/ScrollToTop.js';
-import NFT from '../img/NFT.jpg';
 
-// https://antdev.tistory.com/80
-
-export default function GuideDetails({ history, location, match }) {
-    // const [ data, setData ] = useState('');
-    // const { no } = match.params;
-    // useEffect(() => {
-    //     axios.get(`/guide/`+no).then((response) => {
-    //     console.log(response.data);    
-    //     setData(response.data);
-    //     });
-    // }, []);    
-
+function Proposal() {
     return (
         <React.Fragment>
             <div className="AppBar">
@@ -41,13 +31,13 @@ export default function GuideDetails({ history, location, match }) {
                         alignItems="center"
                         textAlign="center"
                     >
-                        <div className="guideImage">
-                            <img
-                                alt="NFT"
-                                src={NFT}
-                                style={{ width: '50%', height:'auto' }}
-                            />
-                        </div>
+                        <Grid item xs={12}>
+                            <h2>제휴문의</h2>
+                            <br/>
+                            <a href="mailto:nftprocloud@naver.com">
+                                <h2>nftprocloud@naver.com</h2>
+                            </a>
+                        </Grid>
                     </Grid>
                 </Box>
             </div>
@@ -56,5 +46,7 @@ export default function GuideDetails({ history, location, match }) {
                 <Footer/>
             </div>
         </React.Fragment>
-    )
+    );
 }
+
+export default Proposal;

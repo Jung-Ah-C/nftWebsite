@@ -16,4 +16,10 @@ export const SidebarData = [
         icon: <FaIcons.FaBook/>,
         cName: 'nav-text'
     },
+    {
+        title: '제휴문의',
+        path: '/proposal',
+        icon: <AiIcons.AiFillQuestionCircle/>,
+        cName: 'nav-text'
+    },
 ]
