@@ -123,6 +123,7 @@ export default function Home() {
         });
     }, []);
     
+    console.log(tableData);
     return (
         <React.Fragment>
             <div className="AppBar">
@@ -164,7 +165,7 @@ export default function Home() {
                                     </TableHead>
                                     <TableBody>
                                     {
-                                        tableData ? tableData.map((row) => (
+                                        tableData && tableData.map((row) => (
                                             <TableRow key={row.id} scope={row}>
 
                                                 <TableCell align="center">
@@ -211,7 +212,7 @@ export default function Home() {
                                                 <TableCell align="center">{row.price}</TableCell>
                                                 <TableCell align="center">{row.count}</TableCell>
                                             </TableRow>
-                                        )) : '' 
+                                        ))
                                     }
                                     </TableBody>
                                 </Table>
