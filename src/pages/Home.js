@@ -121,7 +121,7 @@ export default function Home() {
       const fetchItems = async () => {
         setIsLoading(true);
         try {
-          const result = await axios.get(`/schedules`);
+          const result = await axios(`http://180.228.243.235/schedules`);
           setTableData(result.data);
         } catch(err) {
           console.log('Error!');
