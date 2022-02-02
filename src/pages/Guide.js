@@ -20,7 +20,7 @@ import ScrollToTop from '../component/ScrollToTop.js';
 export default function Guide() {
     const [tableData, setTableData] = useState('');
     useEffect(() => {
-        axios.get(`/guides`).then((response) => {
+        axios.get(`http://180.228.243.235/guides`).then((response) => {
         console.log(response.data);    
         setTableData(response.data);
         });

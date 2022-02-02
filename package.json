@@ -1,5 +1,4 @@
 {
-    "proxy": "http://180.228.243.235",
     "name": "nft_website",
     "version": "0.1.0",
     "private": true,
