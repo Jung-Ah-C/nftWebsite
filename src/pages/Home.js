@@ -116,11 +116,20 @@ function Row(props) {
 
 export default function Home() {
     const [tableData, setTableData] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-        axios.get(`/schedules`).then((response) => {
-        console.log(response.data);    
-        setTableData(response.data);
-        });
+      const fetchItems = async () => {
+        setIsLoading(true);
+        try {
+          const result = await axios(`/schedules`);
+          setTableData(result.data);
+        } catch(err) {
+          console.log('Error!');
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchItems();
     }, []);
     
     console.log(tableData);
