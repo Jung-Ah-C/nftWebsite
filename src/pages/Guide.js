@@ -59,7 +59,7 @@ export default function Guide() {
                                     </TableHead>
                                     <TableBody>
                                     { 
-                                        tableData ? tableData.map((row) => (
+                                        tableData && tableData.map((row) => (
                                             <TableRow key={row.id} scope={row}>
                                                 {/* <TableCell align="center">{row.id}</TableCell> */}
                                                 <TableCell align="center">
@@ -69,7 +69,7 @@ export default function Guide() {
                                                 <TableCell align="center">2022-02-02</TableCell>
                                                 {/* <TableCell align="center">{row.readCount}</TableCell> */}
                                             </TableRow>
-                                        )) : '' 
+                                        ))
                                     }
                                     </TableBody>
                                 </Table>
