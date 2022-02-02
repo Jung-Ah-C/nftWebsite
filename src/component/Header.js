@@ -112,7 +112,7 @@ export default function Header() {
                                     <img
                                         alt="hanguelLogo"
                                         src={hanguelLogo}
-                                        style={{ width:250, height:100, margin:'auto' }}
+                                        style={{ width:200, height:'auto', margin:'auto' }}
                                         
                                     />
                                 </a>
@@ -122,7 +122,7 @@ export default function Header() {
                         <Grid xs={4}>
                             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex', justifyContent: 'end' } }}>
                                 <IconButton sx={{ p: 0 }}>
-                                    <TwitterIcon/>
+                                    <a href="https://twitter.com/NFTPROCLOUD"><TwitterIcon/></a>
                                 </IconButton>
                             </Box>
                         </Grid>

@@ -18,38 +18,13 @@ import Footer from '../component/Footer.js';
 import ScrollToTop from '../component/ScrollToTop.js';
 
 export default function Guide() {
-    // const [tableData, setTableData] = useState('');
-    // useEffect(() => {
-    //     axios.get(`/schedules`).then((response) => {
-    //     console.log(response.data);    
-    //     setTableData(response.data);
-    //     });
-    // }, []);
-    
-    // 테스트 데이터
-    const tableData = [
-        {
-            id: '1',
-            title: 'NFT란?',
-            author: '관리자',
-            date: '2022-02-01',
-            readCount: '5',
-        },
-        {
-            id: '2',
-            title: 'OG란?',
-            author: '관리자',
-            date: '2022-02-01',
-            readCount: '9',
-        },
-        {
-            id: '3',
-            title: '민팅이란?',
-            author: '관리자',
-            date: '2022-02-01',
-            readCount: '10',
-        },
-    ]
+    const [tableData, setTableData] = useState('');
+    useEffect(() => {
+        axios.get(`/guides`).then((response) => {
+        console.log(response.data);    
+        setTableData(response.data);
+        });
+    }, []);
 
     return (
         <React.Fragment>
@@ -72,27 +47,27 @@ export default function Guide() {
                     >
                         <Grid item xs={11}>
                             <TableContainer component={Paper}>
-                                <Table stickyHeader sx={{ minWidth: 800 }}>
+                                <Table stickyHeader sx={{ minWidth: 650 }}>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="center" width="10%"><b>글번호</b></TableCell>
+                                            {/* <TableCell align="center" width="10%"><b>글번호</b></TableCell> */}
                                             <TableCell align="center" width="10%"><b>제목</b></TableCell>
                                             <TableCell align="center" width="10%"><b>작성자</b></TableCell>
                                             <TableCell align="center" width="10%"><b>작성날짜</b></TableCell>
-                                            <TableCell align="center" width="10%"><b>조회수</b></TableCell>
+                                            {/* <TableCell align="center" width="10%"><b>조회수</b></TableCell> */}
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                     { 
                                         tableData ? tableData.map((row) => (
                                             <TableRow key={row.id} scope={row}>
-                                                <TableCell align="center">{row.id}</TableCell>
+                                                {/* <TableCell align="center">{row.id}</TableCell> */}
                                                 <TableCell align="center">
-                                                    <Link to={`/guide/${row.id}`}>{row.title}</Link>
+                                                    <a href={"/guide/"+row.id}>{row.title}</a>
                                                 </TableCell>
-                                                <TableCell align="center">{row.author}</TableCell>
-                                                <TableCell align="center">{row.date}</TableCell>
-                                                <TableCell align="center">{row.readCount}</TableCell>
+                                                <TableCell align="center">관리자</TableCell>
+                                                <TableCell align="center">2022-02-02</TableCell>
+                                                {/* <TableCell align="center">{row.readCount}</TableCell> */}
                                             </TableRow>
                                         )) : '' 
                                     }

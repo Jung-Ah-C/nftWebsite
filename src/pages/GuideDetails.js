@@ -7,19 +7,19 @@ import Toolbar from '@mui/material/Toolbar';
 import Header from '../component/Header.js';
 import Footer from '../component/Footer.js';
 import ScrollToTop from '../component/ScrollToTop.js';
-import NFT from '../img/NFT.jpg';
+import { useParams } from 'react-router-dom';
 
-// https://antdev.tistory.com/80
+export default function GuideDetails() {
+    const [ data, setData ] = useState('');
+    // useParams는 객체로 parameter 값들을 가져옴
+    const id = useParams().id;
 
-export default function GuideDetails({ history, location, match }) {
-    // const [ data, setData ] = useState('');
-    // const { no } = match.params;
-    // useEffect(() => {
-    //     axios.get(`/guide/`+no).then((response) => {
-    //     console.log(response.data);    
-    //     setData(response.data);
-    //     });
-    // }, []);    
+    useEffect(() => {
+        axios.get(`/guides/${id}`).then((response) => {
+        console.log(response.data); 
+        setData(response.data);
+        });
+    }, []);    
 
     return (
         <React.Fragment>
@@ -43,8 +43,7 @@ export default function GuideDetails({ history, location, match }) {
                     >
                         <div className="guideImage">
                             <img
-                                alt="NFT"
-                                src={NFT}
+                                src={data.image}
                                 style={{ width: '50%', height:'auto' }}
                             />
                         </div>

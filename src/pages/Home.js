@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import './Home.css';
 
 import { BsLink45Deg } from "react-icons/bs";
 import { BsDiscord } from "react-icons/bs";
@@ -28,10 +28,13 @@ import Typography from '@mui/material/Typography';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// components
 import Header from '../component/Header.js';
 import Footer from '../component/Footer.js';
 import ScrollToTop from '../component/ScrollToTop.js';
+import mobileGuide from '../img/mobileGuide.png';
 
+// 향후 상세 정보 기능 만들 때 쓸 예정
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -61,30 +64,46 @@ function Row(props) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  History
+                  민팅정보 (향후 업데이트 예정입니다.)
                 </Typography>
-                <Table size="small" aria-label="purchases">
+                <Table size="small" aria-label="details">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Date</TableCell>
-                      <TableCell>Customer</TableCell>
-                      <TableCell align="right">Amount</TableCell>
-                      <TableCell align="right">Total price ($)</TableCell>
+                      <TableCell>종류</TableCell>
+                      <TableCell>날짜</TableCell>
+                      <TableCell>시간</TableCell>
+                      <TableCell>민팅수량</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.date}>
-                        <TableCell component="th" scope="row">
-                          {historyRow.date}
-                        </TableCell>
-                        <TableCell>{historyRow.customerId}</TableCell>
-                        <TableCell align="right">{historyRow.amount}</TableCell>
-                        <TableCell align="right">
-                          {Math.round(historyRow.amount * row.price * 100) / 100}
-                        </TableCell>
+                    {/* 프리 */}
+                      <TableRow>
+                        <TableCell>프리</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
                       </TableRow>
-                    ))}
+                    {/* OG */}
+                      <TableRow>
+                        <TableCell>OG</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                      </TableRow>
+                    {/* WL */}
+                      <TableRow>
+                        <TableCell>WL</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                      </TableRow>
+                    {/* 퍼블릭 */}
+                      <TableRow>
+                        <TableCell>퍼블릭</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                        <TableCell>-</TableCell>
+                      </TableRow>
                   </TableBody>
                 </Table>
               </Box>
@@ -94,10 +113,6 @@ function Row(props) {
       </React.Fragment>
     );
   }
-
-
-
-
 
 export default function Home() {
     const [tableData, setTableData] = useState('');
@@ -115,9 +130,13 @@ export default function Home() {
             </div>
             <Toolbar id="back-to-top-anchor" />
             <div className="content">
+                {/* 모바일 버전  */}
+                <Box sx={{ marginTop : 10, display: { xs: "flex", md: "none" }, textAlign : 'center' }}>
+                    <img src={mobileGuide} width={400} height='auto'/>
+                </Box>
                 <Box 
+                    className="home-content"
                     sx={{ 
-                        marginTop : 20,
                         height: 'auto',
                         marginBottom : 7
                     }}
@@ -132,63 +151,64 @@ export default function Home() {
                                 <Table stickyHeader sx={{ minWidth: 800 }}>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="center" width="10%"><b>프로젝트</b></TableCell>
+                                            <TableCell align="center" width="20%"><b>프로젝트</b></TableCell>
                                             <TableCell align="center" width="10%"></TableCell>
-                                            <TableCell align="center" width="10%"><b>민팅가격</b></TableCell>
                                             <Tooltip title="시장 상황에 따라 가격이 변동될 수 있습니다.">
-                                                <TableCell align="center" width="10%"><b>최고가 or 예상가</b></TableCell>
+                                                <TableCell align="center" width="10%"><b>최고가</b></TableCell>
                                             </Tooltip>
-                                            <TableCell align="center" width="10%"><b>링크</b></TableCell>
-                                            <TableCell align="center" width="10%"><b>민팅날짜</b></TableCell>
+                                            <TableCell align="center" width="20%"><b>링크</b></TableCell>
+                                            <TableCell align="center" width="20%"><b>민팅날짜</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>민팅가격</b></TableCell>
                                             <TableCell align="center" width="10%"><b>수량</b></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                    { 
+                                    {
                                         tableData ? tableData.map((row) => (
                                             <TableRow key={row.id} scope={row}>
+
                                                 <TableCell align="center">
-                                                <Carousel variant="dark" indicators={false}>
-                                                    <Carousel.Item>
-                                                        <img
-                                                        className="d-block w-100"
-                                                        src={row.image}
-                                                        alt="First slide"
-                                                        width="150" 
-                                                        height="auto"
-                                                        />
-                                                    </Carousel.Item>
-                                                    <Carousel.Item>
-                                                        <img
-                                                        className="d-block w-100"
-                                                        src={row.image}
-                                                        alt="Second slide"
-                                                        width="150" 
-                                                        height="auto"
-                                                        />
-                                                    </Carousel.Item>
-                                                    <Carousel.Item>
-                                                        <img
-                                                        className="d-block w-100"
-                                                        src={row.image}
-                                                        alt="Third slide"
-                                                        width="150" 
-                                                        height="auto"
-                                                        />
-                                                    </Carousel.Item>
-                                                </Carousel>
+                                                    <Carousel variant="dark" indicators={false}>
+                                                        <Carousel.Item>
+                                                            <img
+                                                            className="d-block w-100"
+                                                            src={row.image}
+                                                            alt="First slide" 
+                                                            maxWidth="150"
+                                                            height="auto"
+                                                            />
+                                                        </Carousel.Item>
+                                                        <Carousel.Item>
+                                                            <img
+                                                            className="d-block w-100"
+                                                            src={row.image}
+                                                            alt="Second slide"
+                                                            maxWidth="150"
+                                                            height="auto"
+                                                            />
+                                                        </Carousel.Item>
+                                                        <Carousel.Item>
+                                                            <img
+                                                            className="d-block w-100"
+                                                            src={row.image}
+                                                            alt="Third slide"
+                                                            maxWidth="150"
+                                                            height="auto"
+                                                            />
+                                                        </Carousel.Item>
+                                                    </Carousel>
                                                 </TableCell>
                                                 <TableCell align="center">
                                                     {row.name}
                                                 </TableCell>
-                                                <TableCell align="center">{row.price}</TableCell>
-                                                <TableCell align="center">{row.high_price}</TableCell>
+                                                <TableCell align="center" style={{ color: 'red' }}>{row.high_price}</TableCell>
                                                 <TableCell align="center">
                                                     <a href={row.weblink} style={{ color: 'gray' }} alt="webLink"><BsLink45Deg style={{ width: '20', height: '20' }}/></a>
                                                     <a href={row.twitlink} style={{ color: 'gray' }} alt="twitterLink"><BsTwitter style={{ width: '20', height: '20' }}/></a>
                                                     <a href={row.discordlink} style={{ color: 'gray' }} alt="discordLink"><BsDiscord style={{ width: '20', height: '20' }}/></a>
                                                 </TableCell>
                                                 <TableCell align="center">{row.date}</TableCell>
+                                                <TableCell align="center">{row.price}</TableCell>
                                                 <TableCell align="center">{row.count}</TableCell>
                                             </TableRow>
                                         )) : '' 
