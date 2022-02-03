@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import AdfitWebComponent from 'react-adfit-web-component';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,6 +25,21 @@ export default function Guide() {
         console.log(response.data);    
         setTableData(response.data);
         });
+
+        let ins = document.createElement('ins');
+        let scr = document.createElement('script');
+
+        ins.className = 'kakao_ad_area';
+        ins.style = "display:none; width:100%;";
+        scr.async = 'true';
+        scr.type = "text/javascript";
+        scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+        ins.setAttribute('data-ad-width', '320');
+        ins.setAttribute('data-ad-height', '50');
+        ins.setAttribute('data-ad-unit', 'DAN-mOWXSbBQNnbTzcui');
+
+        document.querySelector('.adfit').appendChild(ins);
+        document.querySelector('.adfit').appendChild(scr);
     }, []);
 
     return (
@@ -32,6 +48,9 @@ export default function Guide() {
                 <Header/>
             </div>
             <Toolbar id="back-to-top-anchor" />
+            
+            <div className="adfit"/>
+            
             <div className="content">
                 <Box 
                     sx={{ 

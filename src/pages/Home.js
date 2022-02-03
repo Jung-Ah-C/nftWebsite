@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './Home.css';
+import AdfitWebComponent from 'react-adfit-web-component';
 
 import { BsLink45Deg } from "react-icons/bs";
 import { BsDiscord } from "react-icons/bs";
@@ -130,6 +131,21 @@ export default function Home() {
         }
       };
       fetchItems();
+
+      let ins = document.createElement('ins');
+      let scr = document.createElement('script');
+
+      ins.className = 'kakao_ad_area';
+      ins.style = "display:none; width:100%;";
+      scr.async = 'true';
+      scr.type = "text/javascript";
+      scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+      ins.setAttribute('data-ad-width', '320');
+      ins.setAttribute('data-ad-height', '50');
+      ins.setAttribute('data-ad-unit', 'DAN-mOWXSbBQNnbTzcui');
+
+      document.querySelector('.adfit').appendChild(ins);
+      document.querySelector('.adfit').appendChild(scr);
     }, []);
     
     console.log(tableData);
@@ -139,6 +155,9 @@ export default function Home() {
                 <Header/>
             </div>
             <Toolbar id="back-to-top-anchor" />
+
+            <div className="adfit"/>
+            
             <div className="content">
                 {/* 모바일 버전  */}
                 <Box sx={{ marginTop : 10, display: { xs: "flex", md: "none" }, textAlign : 'center' }}>
@@ -218,7 +237,7 @@ export default function Home() {
                                                     <a href={row.discordlink} style={{ color: 'gray' }} alt="discordLink"><BsDiscord style={{ width: '20', height: '20' }}/></a>
                                                 </TableCell>
                                                 <TableCell align="center">{row.date}</TableCell>
-                                                <TableCell align="center">{row.price}</TableCell>
+                                                <TableCell align="center" style={{ color: 'blue' }}>{row.price}</TableCell>
                                                 <TableCell align="center">{row.count}</TableCell>
                                             </TableRow>
                                         ))
