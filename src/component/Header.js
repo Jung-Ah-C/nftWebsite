@@ -16,6 +16,7 @@ import { SidebarData } from './SidebarData';
 
 import logo from '../img/logo.png';
 import hanguelLogo from '../img/hanguelLogo.png';
+import { SiKakaotalk } from "react-icons/si";
 
 export default function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -121,8 +122,11 @@ export default function Header() {
                         {/* SNS 로고 */}
                         <Grid xs={4}>
                             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex', justifyContent: 'end' } }}>
-                                <IconButton sx={{ p: 0 }}>
-                                    <a href="https://twitter.com/NFTPROCLOUD"><TwitterIcon/></a>
+                                <IconButton sx={{ p: 0, marginRight: 1 }}>
+                                    <a href="https://open.kakao.com/o/gRFLV7Xd" alt="openKakaoLink" style={{ color : 'gray' }}><SiKakaotalk/></a>
+                                </IconButton>
+                                <IconButton sx={{ p: 0, marginRight: 1 }}>
+                                    <a href="https://twitter.com/NFTPROCLOUD" alt="twitterLink"><TwitterIcon/></a>
                                 </IconButton>
                             </Box>
                         </Grid>
