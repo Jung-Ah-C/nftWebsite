@@ -17,7 +17,7 @@ export default function GuideDetails() {
 
     useEffect(() => {
         axios.get(`http://180.228.243.235/guides/${id}`).then((response) => {
-        console.log(response.data); 
+        // console.log(response.data); 
         setData(response.data);
         });
 

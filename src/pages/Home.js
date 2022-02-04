@@ -148,7 +148,7 @@ export default function Home() {
       // document.querySelector('.adfit').appendChild(scr);
     }, []);
     
-    console.log(tableData);
+    // console.log(tableData);
     return (
         <React.Fragment>
             <div className="AppBar">
