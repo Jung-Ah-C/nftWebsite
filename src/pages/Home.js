@@ -34,11 +34,10 @@ import Footer from '../component/Footer.js';
 import ScrollToTop from '../component/ScrollToTop.js';
 import mobileGuide from '../img/mobileGuide.png';
 
-// 향후 상세 정보 기능 만들 때 쓸 예정
-function Row(props) {
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
-  
+// 테이블 행 내용과 상세정보
+function Row (props) {
+  const [open, setOpen] = React.useState(false);  
+  const { row } = props;
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -51,20 +50,42 @@ function Row(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell component="th" scope="row">
-            {row.name}
-          </TableCell>
-          <TableCell align="right">{row.calories}</TableCell>
-          <TableCell align="right">{row.fat}</TableCell>
-          <TableCell align="right">{row.carbs}</TableCell>
-          <TableCell align="right">{row.protein}</TableCell>
-        </TableRow>
-        <TableRow>
+          <TableCell align="center">
+              <Carousel variant="dark" indicators={false}>
+                  {
+                    row.image && row.image.map((item) => (
+                      <Carousel.Item>
+                        <img
+                        className="d-block w-100"
+                        src={item}
+                        alt="NFT Image" 
+                        maxWidth="150"
+                        height="auto"
+                        />
+                  </Carousel.Item>
+                    ))
+                  }
+              </Carousel>
+            </TableCell>
+            <TableCell align="center">
+              {row.name}
+            </TableCell>
+            <TableCell align="center" style={{ color: 'red' }}>{row.high_price}</TableCell>
+            <TableCell align="center">
+                <a href={row.weblink} style={{ color: 'gray' }} alt="webLink"><BsLink45Deg style={{ width: '20', height: '20' }}/></a>
+                <a href={row.twitlink} style={{ color: 'gray' }} alt="twitterLink"><BsTwitter style={{ width: '20', height: '20' }}/></a>
+                <a href={row.discordlink} style={{ color: 'gray' }} alt="discordLink"><BsDiscord style={{ width: '20', height: '20' }}/></a>
+            </TableCell>
+            <TableCell align="center">{row.date}</TableCell>
+            <TableCell align="center" style={{ color: 'blue' }}>{row.price}</TableCell>
+            <TableCell align="center">{row.count}</TableCell>
+          </TableRow>
+          <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
+              <Box sx={{ margin: 1, justifyContent: "center" }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  민팅정보 (향후 업데이트 예정입니다.)
+                  민팅정보
                 </Typography>
                 <Table size="small" aria-label="details">
                   <TableHead>
@@ -76,34 +97,16 @@ function Row(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* 프리 */}
-                      <TableRow>
-                        <TableCell>프리</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                      </TableRow>
-                    {/* OG */}
-                      <TableRow>
-                        <TableCell>OG</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                      </TableRow>
-                    {/* WL */}
-                      <TableRow>
-                        <TableCell>WL</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                      </TableRow>
-                    {/* 퍼블릭 */}
-                      <TableRow>
-                        <TableCell>퍼블릭</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                      </TableRow>
+                      {
+                        row.schedule && row.schedule.map(item => ( 
+                        <TableRow>
+                          <TableCell>{item.category}</TableCell>
+                          <TableCell>{item.date}</TableCell>
+                          <TableCell>{item.time}</TableCell>
+                          <TableCell>{item.count}</TableCell>
+                        </TableRow>
+                        ))
+                      }
                   </TableBody>
                 </Table>
               </Box>
@@ -116,17 +119,13 @@ function Row(props) {
 
 export default function Home() {
     const [tableData, setTableData] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
       const fetchItems = async () => {
-        setIsLoading(true);
         try {
           const result = await axios(`http://180.228.243.235/schedules`);
           setTableData(result.data);
         } catch(err) {
           console.log('Error!');
-        } finally {
-          setIsLoading(false);
         }
       };
       fetchItems();
@@ -180,6 +179,7 @@ export default function Home() {
                                 <Table stickyHeader sx={{ minWidth: 800 }}>
                                     <TableHead>
                                         <TableRow>
+                                            <TableCell align="center" width="5%"></TableCell>
                                             <TableCell align="center" width="20%"><b>프로젝트</b></TableCell>
                                             <TableCell align="center" width="10%"></TableCell>
                                             <Tooltip title="시장 상황에 따라 가격이 변동될 수 있습니다.">
@@ -193,54 +193,9 @@ export default function Home() {
                                     </TableHead>
                                     <TableBody>
                                     {
-                                        tableData && tableData.map((row) => (
-                                            <TableRow key={row.id} scope={row}>
-
-                                                <TableCell align="center">
-                                                    <Carousel variant="dark" indicators={false}>
-                                                        <Carousel.Item>
-                                                            <img
-                                                            className="d-block w-100"
-                                                            src={row.image}
-                                                            alt="First slide" 
-                                                            maxWidth="150"
-                                                            height="auto"
-                                                            />
-                                                        </Carousel.Item>
-                                                        <Carousel.Item>
-                                                            <img
-                                                            className="d-block w-100"
-                                                            src={row.image}
-                                                            alt="Second slide"
-                                                            maxWidth="150"
-                                                            height="auto"
-                                                            />
-                                                        </Carousel.Item>
-                                                        <Carousel.Item>
-                                                            <img
-                                                            className="d-block w-100"
-                                                            src={row.image}
-                                                            alt="Third slide"
-                                                            maxWidth="150"
-                                                            height="auto"
-                                                            />
-                                                        </Carousel.Item>
-                                                    </Carousel>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell align="center" style={{ color: 'red' }}>{row.high_price}</TableCell>
-                                                <TableCell align="center">
-                                                    <a href={row.weblink} style={{ color: 'gray' }} alt="webLink"><BsLink45Deg style={{ width: '20', height: '20' }}/></a>
-                                                    <a href={row.twitlink} style={{ color: 'gray' }} alt="twitterLink"><BsTwitter style={{ width: '20', height: '20' }}/></a>
-                                                    <a href={row.discordlink} style={{ color: 'gray' }} alt="discordLink"><BsDiscord style={{ width: '20', height: '20' }}/></a>
-                                                </TableCell>
-                                                <TableCell align="center">{row.date}</TableCell>
-                                                <TableCell align="center" style={{ color: 'blue' }}>{row.price}</TableCell>
-                                                <TableCell align="center">{row.count}</TableCell>
-                                            </TableRow>
-                                        ))
+                                      tableData && tableData.map((row) => (
+                                        <Row key={row.id} row={row}/>
+                                      ))
                                     }
                                     </TableBody>
                                 </Table>
