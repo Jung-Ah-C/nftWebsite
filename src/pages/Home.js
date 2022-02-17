@@ -62,7 +62,7 @@ function Row (props) {
                         maxWidth="150"
                         height="auto"
                         />
-                  </Carousel.Item>
+                      </Carousel.Item>
                     ))
                   }
               </Carousel>
