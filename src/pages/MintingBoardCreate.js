@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
-import { Navigate, Route } from 'react-router';
 
 // components
 import Header from '../component/Header.js';
 import ScrollToTop from '../component/ScrollToTop.js';
 import Footer from '../component/Footer.js';
-import Home from '../pages/Home';
 
 // mui
 import Toolbar from '@mui/material/Toolbar';
@@ -31,9 +29,6 @@ const validateMessages = {
       email: '${label}은 이메일 형식이 아닙니다.',
       number: '${label} is not a valid number!',
     },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
   };
   
 const normFile = (e) => {
@@ -47,31 +42,54 @@ const normFile = (e) => {
 };
 
 
-function WriteMintingBoard() {
+function MintingBoardCreate() {
     const [form] = Form.useForm();
-    const [error, setError] = useState();
-    const [isSuccess, setIsSuccess] = useState(false);
 
-    const onFinish = (values) => {
-        console.log(values);
-        setError("")
-            axios.post(`http://180.228.243.235/boards`, values)
-                .then((response) => {
-                    console.log('sent data to the server and response is .. : ', JSON.stringify(response));
-                    if(response.status===200){
-                        alert("등록 성공!")
-                        setIsSuccess(true);
-                    }
-            }).catch((error) => {
-                console.log('failed to send form data.', error);
-            })
-    };
+    const [files, setFiles] = useState('');
 
+    // 입력 폼 초기화
     const onReset = () => {
         form.resetFields();
     };
 
-    const [files, setFiles] = useState('');
+    const handleUpload = ({ fileList }) => {
+        console.log('fileList', fileList);
+        setFiles({ fileList });
+    };
+
+    const onFinish = (values) => {
+        const { user_id, user_pw, title, content } = values;
+        
+        // 이미지 파일 포맷 설정
+        const formData = new FormData();
+        console.log('onFinish files {} : ', files);
+        for(let i = 0; i < 3; i++) {
+            formData.append('files', files[i]);
+        }
+        const config = {
+            Headers: {
+                'content-type': 'multipart/form-data'
+            },
+        }
+        
+        // 폼에서 작성한 데이터 보내기
+        axios.post(`http://180.228.243.235/boards`, {user_id, user_pw, title, content})
+            .then((response) => {
+                console.log('sent data to the server and response is .. : ', response);
+                
+                // 이미지 보내기
+                axios.post(`http://180.228.243.235/boards/${response.data.id}/images`, formData, config)
+                    .then((responseImages) => {
+                        console.log('sent images to the server and response is .. :', responseImages);
+                    }).catch((error) => {
+                        console.log('failed to send images.', error);
+                    })
+                window.location.replace("/mintingBoard");
+        }).catch((error) => {
+            console.log('failed to send form data.', error);
+        })
+    };
+
 
     return (
         <React.Fragment>
@@ -166,21 +184,22 @@ function WriteMintingBoard() {
                             label="사진"
                         >
                             <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                            <Upload.Dragger 
-                                name="image" 
-                                action="/upload.do"
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <p className="ant-upload-drag-icon">
-                                    <InboxOutlined />
-                                </p>
-                                <p className="ant-upload-text">업로드 할 사진을 클릭 또는 드래그로 첨부해주세요.</p>
-                                <p className="ant-upload-hint">사진은 3장까지만 업로드 가능합니다.</p>
-                            </Upload.Dragger>
+                                <Upload.Dragger 
+                                    name="image"
+                                    rules={[
+                                        {
+                                            required: true,
+                                        },
+                                    ]}
+                                    onChange={handleUpload}
+                                    beforeUpload={() => false}
+                                >
+                                    <p className="ant-upload-drag-icon">
+                                        <InboxOutlined />
+                                    </p>
+                                    <p className="ant-upload-text">업로드 할 사진을 클릭 또는 드래그로 첨부해주세요.</p>
+                                    <p className="ant-upload-hint">사진은 3장까지만 업로드 가능합니다.</p>
+                                </Upload.Dragger>
                             </Form.Item>
                         </Form.Item>
                         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -193,7 +212,6 @@ function WriteMintingBoard() {
                         </Form.Item>
                     </Form>
                 </Box>
-                    {isSuccess ? <Navigate to="/mintingBoard" /> : <Home/>}
             </div>
             <ScrollToTop/>
             <div className="Footer">
@@ -203,4 +221,4 @@ function WriteMintingBoard() {
   )
 }
 
-export default WriteMintingBoard
+export default MintingBoardCreate
