@@ -22,9 +22,9 @@ function App() {
 
         <Route exact path="/proposal" element={<Proposal/>}/>
 
-        <Route exact path="/mintingBoard" element={<MintingBoard/>}/>
+        {/* <Route exact path="/mintingBoard" element={<MintingBoard/>}/>
         <Route exact path="/mintingBoard/write" element={<MintingBoardCreate/>} />
-        <Route exact path="/mintingBoard/:id" element={<MintingBoardDetail/>} />
+        <Route exact path="/mintingBoard/:id" element={<MintingBoardDetail/>} /> */}
       </Routes>
     </BrowserRouter>
     </>

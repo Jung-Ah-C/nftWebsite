@@ -10,85 +10,55 @@ import Footer from '../component/Footer.js';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 
-// antd
-import { Form, Input, Button, Upload } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
-
-const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-};
-
-const validateMessages = {
-    required: '${label}은 필수 입력 사항입니다!',
-    types: {
-      email: '${label}은 이메일 형식이 아닙니다.',
-      number: '${label} is not a valid number!',
-    },
-  };
-  
-const normFile = (e) => {
-    console.log('Upload event:', e);
-
-    if (Array.isArray(e)) {
-    return e;
-    }
-
-    return e && e.fileList;
-};
+// react bootstrap
+import { Button } from 'react-bootstrap';
 
 
 function MintingBoardCreate() {
-    const [form] = Form.useForm();
-
+    const [formValue, setFormValue] = useState({
+        user_id: '',
+        user_pw: '',
+        title: '',
+        content: ''
+    });
     const [files, setFiles] = useState('');
 
-    // 입력 폼 초기화
-    const onReset = () => {
-        form.resetFields();
-    };
+    const handleChange = (event) => {
+        setFormValue({
+            ...formValue,
+            [event.target.name] : event.target.value
+        });
+    }
 
-    const handleUpload = ({ fileList }) => {
-        console.log('fileList', fileList);
-        setFiles({ fileList });
-    };
+    // 폼 제출 시
+    const handleSubmit = async() => {
+        const formData = new FormData;
+        console.log(formValue.user_id)
+        console.log(formValue.user_pw)
+        console.log(formValue.title)
+        console.log(formValue.content)
+        formData.append("user_id", formValue.user_id)
+        formData.append("user_pw", formValue.user_pw)
+        formData.append("title", formValue.title)
+        formData.append("content", formValue.content)
 
-    const onFinish = (values) => {
-        const { user_id, user_pw, title, content } = values;
-        
-        // 이미지 파일 포맷 설정
-        const formData = new FormData();
-        console.log('onFinish files {} : ', files);
-        for(let i = 0; i < 3; i++) {
-            formData.append('files', files[i]);
-        }
-        const config = {
-            Headers: {
-                'content-type': 'multipart/form-data'
-            },
-        }
-        
-        // 폼에서 작성한 데이터 보내기
-        axios.post(`http://15.164.49.215:3000/boards`, {user_id, user_pw, title, content})
-            .then((response) => {
-                console.log('sent data to the server and response is .. : ', response);
-                
-                // 이미지 보내기
-                axios.post(`http://15.164.49.215:3000/boards/${response.data.id}/images`, formData, config)
-                    .then((responseImages) => {
-                        console.log('sent images to the server and response is .. :', responseImages);
-                    }).catch((error) => {
-                        console.log('failed to send images.', error);
-                    })
-                window.location.replace("/mintingBoard");
-        }).catch((error) => {
-            console.log('failed to send form data.', error);
-        })
-    };
+        // // 이미지 파일 포맷 설정
+        // const imageData = new FormData();
+        // console.log('onFinish files {} : ', files);
+        // for(let i = 0; i < files.length; i++) {
+        //     imageData.append('files', files[i]);
+        // }
+        // const config = {
+        //     Headers: {
+        //         'content-type': 'multipart/form-data'
+        //     },
+        // }
+
+        // 폼에서 작성한 데이터 보내기  / `http://15.164.49.215:3000/boards/${response.data.id}/images`
+        axios.post("http://180.228.243.235/boards", {formData})
+        .then((response) => console.log(response))
+        .catch(error => console.log(error))
+    }
 
 
     return (
@@ -99,11 +69,8 @@ function MintingBoardCreate() {
             <Toolbar id="back-to-top-anchor" />
             <div className="content">
                 <Box 
-                    component="form" 
-                    autoComplete="off"
-                    noValidate
                     sx={{ 
-                        marginTop : 15,
+                        marginTop : 10,
                         height: 'auto',
                         marginBottom : 7,
                         display: 'flex',
@@ -112,105 +79,54 @@ function MintingBoardCreate() {
                         alignItems : 'center'
                     }}
                 >
-                    <Form {...layout} form={form} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-                        <Form.Item
-                            name="title"
-                            label="제목"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            name="content"
-                            label="내용"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input.TextArea />
-                        </Form.Item>
-                        <Form.Item
-                            name="user_id"
-                            label="닉네임"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item 
-                            name="user_pw" 
-                            label="비밀번호"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-                        <Form.Item
-                            name="confirm"
-                            label="비밀번호 확인"
-                            dependencies={['user_pw']}
-                            hasFeedback
-                            rules={[
-                            {
-                                required: true,
-                                message: '비밀번호를 한번 더 입력해주세요!',
-                            },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                if (!value || getFieldValue('user_pw') === value) {
-                                    return Promise.resolve();
-                                }
+                    <h1>게시물 등록</h1>
+                    <form 
+                        onSubmit={handleSubmit}
+                        style= {{
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}
+                    >
+                            <label>
+                                제목:
+                                <input
+                                    name="title"
+                                    placeholder="제목을 입력하세요."
+                                    value={formValue.title}
+                                    onChange={handleChange}
+                                />
+                            </label>
+                            
+                            <label>내용</label>
+                            <textarea
+                                name="content"
+                                placeholder="내용을 입력하세요."
+                                value={formValue.content}
+                                onChange={handleChange}
+                                rows={6}
+                                cols={50}
+                            />
+                            <p>닉네임</p>
+                            <input
+                                name="user_id"
+                                placeholder="닉네임을 입력하세요."
+                                value={formValue.user_id}
+                                onChange={handleChange}
+                            />
 
-                                return Promise.reject(new Error('입력하신 비밀번호가 다릅니다!'));
-                                },
-                            }),
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-                        <Form.Item 
-                            label="사진"
-                        >
-                            <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                                <Upload.Dragger 
-                                    name="image"
-                                    rules={[
-                                        {
-                                            required: true,
-                                        },
-                                    ]}
-                                    onChange={handleUpload}
-                                    beforeUpload={() => false}
-                                >
-                                    <p className="ant-upload-drag-icon">
-                                        <InboxOutlined />
-                                    </p>
-                                    <p className="ant-upload-text">업로드 할 사진을 클릭 또는 드래그로 첨부해주세요.</p>
-                                    <p className="ant-upload-hint">사진은 3장까지만 업로드 가능합니다.</p>
-                                </Upload.Dragger>
-                            </Form.Item>
-                        </Form.Item>
-                        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                            <Button danger htmlType="submit">
-                                등록
-                            </Button>
-                            <Button htmlType="button" onClick={onReset}>
-                                초기화
-                            </Button>
-                        </Form.Item>
-                    </Form>
+                            <p>비밀번호</p>
+                            <input
+                                type="password"
+                                name="user_pw"
+                                placeholder="비밀번호를 입력하세요."
+                                value={formValue.user_pw}
+                                onChange={handleChange}
+                            />
+
+                            <input type="file"/>
+                            <br/>
+                            <input type="submit" value="등록하기"/>
+                    </form>
                 </Box>
             </div>
             <ScrollToTop/>

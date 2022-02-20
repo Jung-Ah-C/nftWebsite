@@ -13,6 +13,11 @@ import
     } from 'semantic-ui-react';
 
 
+// material UI
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+
+
 import logo from '../img/logo.png';
 
 function Comments() {
@@ -43,48 +48,50 @@ function Comments() {
 
     return (
         <div>
-            <Comment.Group style={{ }}>
-                <Header as='h3' dividing>
-                    댓글
-                </Header>
+            <Grid>
+                <Comment.Group style={{ }}>
+                    <Header as='h3' dividing>
+                        댓글
+                    </Header>
 
-                {/* 댓글 목록 */}
-                {
-                    reply && reply.map((row)=> (
-                        <Comment>
-                            <Comment.Avatar src= {logo} />
-                            <Comment.Content>
-                                <Comment.Author as='a'>{row.user_id}</Comment.Author>
-                                <Comment.Metadata>
-                                    <div>{row.createdAt.slice(0, 10)} {row.createdAt.slice(11, 16)}</div>
-                                </Comment.Metadata>
-                                <Comment.Text>
-                                    {row.content}
-                                </Comment.Text>
-                            </Comment.Content>
-                        </Comment>
-                    ))
-                }
+                    {/* 댓글 목록 */}
+                    {
+                        reply && reply.map((row)=> (
+                            <Comment>
+                                <Comment.Avatar src= {logo} />
+                                <Comment.Content>
+                                    <Comment.Author as='a'>{row.user_id}</Comment.Author>
+                                    <Comment.Metadata>
+                                        <div>{row.createdAt.slice(0, 10)} {row.createdAt.slice(11, 16)}</div>
+                                    </Comment.Metadata>
+                                    <Comment.Text>
+                                        {row.content}
+                                    </Comment.Text>
+                                </Comment.Content>
+                            </Comment>
+                        ))
+                    }
 
-                {/* 댓글 입력란 */}
-                <Form reply>
-                    <Form.Group widths='equal'>
-                        <Form.Input
-                            label='닉네임'
-                            placeholder='닉네임을 입력하세요.'
-                            name='nickname'
-                        />
-                        <Form.Input
-                            label='비밀번호'
-                            placeholder='비밀번호를 입력하세요.'
-                            name='password'
-                            type='password'
-                        />
-                    </Form.Group>
-                    <Form.TextArea placeholder = "댓글을 입력하세요." />
-                    <Button content='댓글 달기' labelPosition='left' icon='edit' primary onClick={replyAPI}/>
-                </Form>
-            </Comment.Group>
+                    {/* 댓글 입력란 */}
+                    <Form reply>
+                        <Form.Group widths='equal'>
+                            <Form.Input
+                                label='닉네임'
+                                placeholder='닉네임을 입력하세요.'
+                                name='nickname'
+                            />
+                            <Form.Input
+                                label='비밀번호'
+                                placeholder='비밀번호를 입력하세요.'
+                                name='password'
+                                type='password'
+                            />
+                        </Form.Group>
+                        <Form.TextArea placeholder = "댓글을 입력하세요." />
+                        <Button content='댓글 달기' labelPosition='left' icon='edit' primary onClick={replyAPI}/>
+                    </Form>
+                </Comment.Group>
+            </Grid>
         </div>
     )
 }

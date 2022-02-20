@@ -15,12 +15,12 @@ export const SidebarData = [
         icon: <FaIcons.FaBook/>,
         cName: 'nav-text'
     },
-    {
-        title: '민팅 자랑 게시판',
-        path: '/mintingBoard',
-        icon: <FaIcons.FaHotjar/>,
-        cName: 'nav-text'
-    },
+    // {
+    //     title: '민팅 자랑 게시판',
+    //     path: '/mintingBoard',
+    //     icon: <FaIcons.FaHotjar/>,
+    //     cName: 'nav-text'
+    // },
     {
         title: '제휴문의',
         path: '/proposal',
