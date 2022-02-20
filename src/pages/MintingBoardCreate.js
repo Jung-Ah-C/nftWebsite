@@ -73,12 +73,12 @@ function MintingBoardCreate() {
         }
         
         // 폼에서 작성한 데이터 보내기
-        axios.post(`http://180.228.243.235/boards`, {user_id, user_pw, title, content})
+        axios.post(`http://15.164.49.215:3000/boards`, {user_id, user_pw, title, content})
             .then((response) => {
                 console.log('sent data to the server and response is .. : ', response);
                 
                 // 이미지 보내기
-                axios.post(`http://180.228.243.235/boards/${response.data.id}/images`, formData, config)
+                axios.post(`http://15.164.49.215:3000/boards/${response.data.id}/images`, formData, config)
                     .then((responseImages) => {
                         console.log('sent images to the server and response is .. :', responseImages);
                     }).catch((error) => {

@@ -10,10 +10,6 @@ import MintingBoard from './pages/MintingBoard';
 import MintingBoardCreate from './pages/MintingBoardCreate';
 import MintingBoardDetail from './pages/MintingBoardDetail';
 
-// antd template css
-import 'antd/dist/antd.css';
-
-
 function App() {
   return (
     <>

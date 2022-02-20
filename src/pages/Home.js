@@ -123,12 +123,12 @@ export default function Home() {
     useEffect(() => {
       const fetchItems = async () => {
         try {
-          const result = await axios(`http://180.228.243.235/schedules`);
+          const result = await axios(`http://15.164.49.215:3000/schedules`);
           setTableData(result.data);
         } catch(err) {
           console.log('cannot get table data.', err);
         }
-        axios.get(`http://180.228.243.235/schedules/0/bests`)
+        axios.get(`http://15.164.49.215:3000/schedules/0/bests`)
           .then((response) => {
             setBest(response.data);
           })

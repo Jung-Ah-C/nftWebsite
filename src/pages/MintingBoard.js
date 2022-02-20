@@ -32,7 +32,7 @@ export default function ShowingOff() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
-        axios.get(`http://180.228.243.235/boards`).then((response) => {
+        axios.get(`http://15.164.49.215:3000/boards`).then((response) => {
             console.log(response.data);
             setPosts(response.data);
             setLoading(false);

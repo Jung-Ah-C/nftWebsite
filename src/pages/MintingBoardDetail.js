@@ -6,34 +6,41 @@ import { Link, useParams } from "react-router-dom";
 import Header from '../component/Header.js';
 import ScrollToTop from '../component/ScrollToTop.js';
 import Footer from '../component/Footer.js';
+import Comments from '../component/Comments.js';
 
 // material UI
 import Toolbar from '@mui/material/Toolbar';
+
+// semantic UI
+import { 
+    Container,
+    Header as HeaderName,
+    Divider,
+    Icon,
+    Image,
+    Grid,
+    Label,
+    Button,
+    Input
+
+} from 'semantic-ui-react';
 
 function MintingBoardDetail () {
     // 상세정보 API
     const params = useParams();
     const [boardData, setBoardData] = useState('');
     const [images, setImages] = useState('');
-    const [replys, setReplys] = useState('');
     useEffect(() => {
         // 상세정보 가져오기
-        axios.get(`http://180.228.243.235/boards/${params.id}`)
+        axios.get(`http://15.164.49.215:3000/boards/${params.id}`)
             .then((response) => {
                 setBoardData(response.data);
                 
                 // 이미지 가져오기
-                axios.get(`http://180.228.243.235/boards/${params.id}/images`)
+                axios.get(`http://15.164.49.215:3000/boards/${params.id}/images`)
                     .then((responseImages) => {
                         setImages(responseImages);
-                    })
-                    .catch(err => console.log('cannot get images.', err));
-            // 댓글 가져오기
-            }).then(() => {
-                axios.get(`http://180.228.243.235/boards/${params.id}/replys`)
-                    .then((response) => {
-                        setReplys(response.data);
-                    }).catch(err => console.log('Cannot get comments.', err));
+                    }).catch(err => console.log('cannot get images.', err));
             }).catch(err => {
                 console.log('Cannot get boardData.', err);
             })
@@ -46,7 +53,27 @@ function MintingBoardDetail () {
             </div>
             <Toolbar id="back-to-top-anchor" />
             <div className="content">
+
+                <HeaderName as="h1" dividing>
+                    <Container textAlign="center">제목</Container>
+                </HeaderName>
+                <Grid centered>
+                    <Grid.Row>
+                        <Image size="medium" rounded centered />
+                    </Grid.Row>
+                </Grid>
+                <br />
+                <Divider horizontal>
+                <HeaderName as="h4">
+                <Icon name="comment alternate" />
+                    내용
+                </HeaderName>
+                </Divider>
+                <Container textAlign="center">
                 
+                </Container>
+                <Comments />
+                <br />
             </div>
             <ScrollToTop/>
             <div className="Footer">
