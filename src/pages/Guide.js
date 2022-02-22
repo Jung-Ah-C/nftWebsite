@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import AdfitWebComponent from 'react-adfit-web-component';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,26 +20,10 @@ import ScrollToTop from '../component/ScrollToTop.js';
 export default function Guide() {
     const [tableData, setTableData] = useState('');
     useEffect(() => {
-        axios.get(`http://180.228.243.235/guides`).then((response) => {
-        // console.log(response.data);    
+        axios.get(`http://15.164.49.215:3000/guides`).then((response) => {
+        console.log(response.data);   
         setTableData(response.data);
         });
-
-        // kakao adfit
-        // let ins = document.createElement('ins');
-        // let scr = document.createElement('script');
-
-        // ins.className = 'kakao_ad_area';
-        // ins.style = "display:none; width:100%;";
-        // scr.async = 'true';
-        // scr.type = "text/javascript";
-        // scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
-        // ins.setAttribute('data-ad-width', '320');
-        // ins.setAttribute('data-ad-height', '50');
-        // ins.setAttribute('data-ad-unit', 'DAN-mOWXSbBQNnbTzcui');
-
-        // document.querySelector('.adfit').appendChild(ins);
-        // document.querySelector('.adfit').appendChild(scr);
     }, []);
 
     return (
@@ -49,8 +32,6 @@ export default function Guide() {
                 <Header/>
             </div>
             <Toolbar id="back-to-top-anchor" />
-            
-            {/* <div className="adfit"/> */}
             
             <div className="content">
                 <Box 
@@ -86,7 +67,7 @@ export default function Guide() {
                                                     <a href={"/guide/"+row.id}>{row.title}</a>
                                                 </TableCell>
                                                 <TableCell align="center">관리자</TableCell>
-                                                <TableCell align="center">2022-02-02</TableCell>
+                                                <TableCell align="center">{row.createdAt.slice(0,10)}</TableCell>
                                                 {/* <TableCell align="center">{row.readCount}</TableCell> */}
                                             </TableRow>
                                         ))
