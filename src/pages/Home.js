@@ -62,7 +62,7 @@ function Row (props) {
                         maxWidth="150"
                         height="auto"
                         />
-                  </Carousel.Item>
+                      </Carousel.Item>
                     ))
                   }
               </Carousel>
@@ -94,6 +94,7 @@ function Row (props) {
                       <TableCell>날짜</TableCell>
                       <TableCell>시간</TableCell>
                       <TableCell>민팅수량</TableCell>
+                      <TableCell>비고</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -104,6 +105,7 @@ function Row (props) {
                           <TableCell>{item.date}</TableCell>
                           <TableCell>{item.time}</TableCell>
                           <TableCell>{item.count}</TableCell>
+                          <TableCell>{item.etc}</TableCell>
                         </TableRow>
                         ))
                       }
@@ -119,35 +121,26 @@ function Row (props) {
 
 export default function Home() {
     const [tableData, setTableData] = useState('');
+    const [best, setBest] = useState('');
     useEffect(() => {
       const fetchItems = async () => {
         try {
-          const result = await axios(`http://180.228.243.235/schedules`);
+          const result = await axios(`http://15.164.49.215:3000/schedules`);
+          console.log('Home table data : ', result.data);
           setTableData(result.data);
         } catch(err) {
-          console.log('Error!');
+          console.log('cannot get table data.', err);
         }
+        axios.get(`http://15.164.49.215:3000/schedules/0/bests`)
+          .then((response) => {
+            console.log('Home best data : ', response.data);
+            setBest(response.data);
+          })
+          .catch(err => console.log('cannot get best data.', err));
       };
       fetchItems();
-
-      // kakao adfit
-      // let ins = document.createElement('ins');
-      // let scr = document.createElement('script');
-
-      // ins.className = 'kakao_ad_area';
-      // ins.style = "display:none; width:100%; margin-top:20;";
-      // scr.async = 'true';
-      // scr.type = "text/javascript";
-      // scr.src = "//t1.daumcdn.net/kas/static/ba.min.js";
-      // ins.setAttribute('data-ad-width', '320');
-      // ins.setAttribute('data-ad-height', '50');
-      // ins.setAttribute('data-ad-unit', 'DAN-mOWXSbBQNnbTzcui');
-
-      // document.querySelector('.adfit').appendChild(ins);
-      // document.querySelector('.adfit').appendChild(scr);
     }, []);
     
-    // console.log(tableData);
     return (
         <React.Fragment>
             <div className="AppBar">
@@ -174,13 +167,43 @@ export default function Home() {
                         justifyContent="center" 
                         alignItems="center"
                     >
+                        {/* 금주의 인기 NFT */}
+                          <Grid item xs={11}>
+                            <TableContainer component={Paper} style={{ marginBottom: 70 }}>
+                                <Table stickyHeader sx={{ minWidth: 800 }}>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="center" width="5%"></TableCell>
+                                            <TableCell align="center" width="20%" style={{ color: 'red' }}><b>금주의 인기 프로젝트</b></TableCell>
+                                            <TableCell align="center" width="10%"></TableCell>
+                                            <Tooltip title="시장 상황에 따라 가격이 변동될 수 있습니다.">
+                                                <TableCell align="center" width="10%"><b>최고가</b></TableCell>
+                                            </Tooltip>
+                                            <TableCell align="center" width="20%"><b>링크</b></TableCell>
+                                            <TableCell align="center" width="20%"><b>민팅날짜</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>민팅가격</b></TableCell>
+                                            <TableCell align="center" width="10%"><b>수량</b></TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {
+                                      best && best.map((row) => (
+                                        <Row key={row.id} row={row}/>
+                                      ))
+                                    }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+
+                        {/* NFT 정보 테이블 */}
                         <Grid item xs={11}>
                             <TableContainer component={Paper}>
                                 <Table stickyHeader sx={{ minWidth: 800 }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="center" width="5%"></TableCell>
-                                            <TableCell align="center" width="20%"><b>프로젝트</b></TableCell>
+                                            <TableCell align="center" width="20%"><b>진행중인 프로젝트</b></TableCell>
                                             <TableCell align="center" width="10%"></TableCell>
                                             <Tooltip title="시장 상황에 따라 가격이 변동될 수 있습니다.">
                                                 <TableCell align="center" width="10%"><b>최고가</b></TableCell>
