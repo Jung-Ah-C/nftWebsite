@@ -16,7 +16,7 @@ export default function GuideDetails() {
     const id = useParams().id;
 
     useEffect(() => {
-        axios.get(`http://15.164.49.215:3000/guides/${id}`).then((response) => {
+        axios.get(process.env.REACT_APP_API_URL+`/guides/${id}`).then((response) => {
         // console.log(response.data); 
         setData(response.data);
         });

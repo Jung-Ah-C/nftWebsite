@@ -58,7 +58,7 @@ function Row (props) {
                         <img
                         className="d-block w-100"
                         src={item}
-                        alt="NFT Image" 
+                        alt="NFT" 
                         maxWidth="150"
                         height="auto"
                         />
@@ -122,23 +122,20 @@ function Row (props) {
 export default function Home() {
     const [tableData, setTableData] = useState('');
     const [best, setBest] = useState('');
+    
     useEffect(() => {
-      const fetchItems = async () => {
-        try {
-          const result = await axios(`http://15.164.49.215:3000/schedules`);
-          console.log('Home table data : ', result.data);
-          setTableData(result.data);
-        } catch(err) {
-          console.log('cannot get table data.', err);
-        }
-        axios.get(`http://15.164.49.215:3000/schedules/0/bests`)
+        axios.get(process.env.REACT_APP_API_URL+'/schedules')
           .then((response) => {
-            console.log('Home best data : ', response.data);
+            // console.log('Home table data : ', response.data);
+            setTableData(response.data);
+          })
+          .catch((err) => console.log('cannot get table data.', err));
+        axios.get(process.env.REACT_APP_API_URL+'/schedules/0/bests')
+          .then((response) => {
+            // console.log('Home best data : ', response.data);
             setBest(response.data);
           })
           .catch(err => console.log('cannot get best data.', err));
-      };
-      fetchItems();
     }, []);
     
     return (
@@ -153,7 +150,7 @@ export default function Home() {
             <div className="content">
                 {/* 모바일 버전  */}
                 <Box sx={{ marginTop : 10, display: { xs: "flex", md: "none" }, textAlign : 'center' }}>
-                    <img src={mobileGuide} width={400} height='auto'/>
+                    <img src={mobileGuide} alt="mobileGuide" width={400} height='auto'/>
                 </Box>
                 <Box 
                     className="home-content"
