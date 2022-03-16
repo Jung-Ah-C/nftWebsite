@@ -14,7 +14,6 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { SidebarData } from './SidebarData';
 
-import logo from '../img/logo.png';
 import hanguelLogo from '../img/hanguelLogo.png';
 import { SiKakaotalk } from "react-icons/si";
 
@@ -29,7 +28,7 @@ export default function Header() {
     
     return (
         <>
-            <AppBar position="fixed" color="default" sx={{ height: 100, justifyContent: 'center' }}>
+            <AppBar position="fixed" sx={{ height: 100, justifyContent: 'center', backgroundColor : "#FFFFFF" }}>
                 <Container maxWidth="false">
                     <Toolbar disableGutters>
                         <Grid xs={4}>
@@ -50,7 +49,7 @@ export default function Header() {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color="inherit"
+                                color="default"
                                 >
                                 <MenuIcon />
                                 </IconButton>
@@ -85,7 +84,7 @@ export default function Header() {
                         </Grid>
                         <Grid xs={4}>
                             {/* 중앙 / 데스크탑 버전 */}
-                            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
+                            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' }, minWidth : 380 }}>
                                 {/* 로고 */}
                                 {/* <a href="/">
                                     <img
@@ -123,10 +122,10 @@ export default function Header() {
                         <Grid xs={4}>
                             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex', justifyContent: 'end' } }}>
                                 <IconButton sx={{ p: 0, marginRight: 1 }}>
-                                    <a href="https://open.kakao.com/o/gRFLV7Xd" alt="openKakaoLink" style={{ color : 'gray' }}><SiKakaotalk/></a>
+                                    <a href="https://open.kakao.com/o/gRFLV7Xd" alt="openKakaoLink" style={{ color : '#FFE523' }}><SiKakaotalk/></a>
                                 </IconButton>
                                 <IconButton sx={{ p: 0, marginRight: 1 }}>
-                                    <a href="https://twitter.com/NFTPROCLOUD" alt="twitterLink"><TwitterIcon/></a>
+                                    <a href="https://twitter.com/NFTPROCLOUD" alt="twitterLink" style={{ color : '#33B0FF' }}><TwitterIcon/></a>
                                 </IconButton>
                             </Box>
                         </Grid>
